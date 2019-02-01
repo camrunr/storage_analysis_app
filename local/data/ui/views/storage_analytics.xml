@@ -1,0 +1,189 @@
+<form>
+  <label>Storage Analytics</label>
+  <fieldset submitButton="false" autoRun="true">
+    <input type="time" token="time1" searchWhenChanged="true">
+      <label>Time Range Picker</label>
+      <default>
+        <earliest>-60m@m</earliest>
+        <latest>now</latest>
+      </default>
+    </input>
+    <input type="checkbox" token="splunk_server" searchWhenChanged="true">
+      <label>Hosts</label>
+      <fieldForLabel>splunk_server</fieldForLabel>
+      <fieldForValue>splunk_server</fieldForValue>
+      <search>
+        <query>| rest splunk_server=* /services/server/status/partitions-space | fields splunk_server | dedup splunk_server</query>
+        <earliest>@d</earliest>
+        <latest>now</latest>
+      </search>
+      <delimiter> </delimiter>
+    </input>
+  </fieldset>
+  <row>
+    <panel>
+      <title>Introspection - Reporting Interval (Seconds)</title>
+      <single>
+        <search>
+          <query>| pivot introspection_storage_metrics intro_storage_metrics max(data.interval) AS "Reporting Interval (Seconds)" SPLITROW host AS host | eval host=$splunk_server$ | table "Reporting Interval (Seconds)"</query>
+          <earliest>$time1.earliest$</earliest>
+          <latest>$time1.latest$</latest>
+        </search>
+        <option name="drilldown">none</option>
+      </single>
+    </panel>
+    <panel>
+      <title>Block Devices by Mount Point</title>
+      <table>
+        <search>
+          <query>| pivot introspection_storage_metrics intro_storage_metrics values(data.device) AS "Block Devices" SPLITROW host AS host SPLITROW data.mount_point AS "Mount Point" | eval host=$splunk_server$ | table "Block Devices" "Mount Point"</query>
+          <earliest>$time1.earliest$</earliest>
+          <latest>$time1.latest$</latest>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </table>
+    </panel>
+    <panel>
+      <title>Swap Status</title>
+      <table>
+        <search>
+          <query>| pivot introspection_storage_metrics intro_storage_metrics max(data.swap) AS "Swap Defined (MB)" max(data.swap_used) AS "Swap in Use" SPLITROW host AS host | eval host=$splunk_server$ | table "Swap Defined (MB)" "Swap in Use"</query>
+          <earliest>$time1.earliest$</earliest>
+          <latest>$time1.latest$</latest>
+        </search>
+        <option name="count">10</option>
+        <option name="drilldown">none</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Disk Utilization by Mount Point</title>
+      <table>
+        <search>
+          <query>| pivot introspection_storage_metrics rest_iostats avg(disk_free) AS "% of Disk Available" max(capacity) AS "Total Disk Capacity" SPLITROW splunk_server AS splunk_server SPLITROW mount_point AS "Mount Point" SORT 100 splunk_server ROWSUMMARY 0 COLSUMMARY 0 SHOWOTHER 1 | table "% of Disk Available" "Total Disk Capacity" "Mount Point" | eval host=$splunk_server$</query>
+          <earliest>$time1.earliest$</earliest>
+          <latest>$time1.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="count">20</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">none</option>
+        <option name="percentagesRow">false</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="rowNumbers">false</option>
+        <option name="totalsRow">false</option>
+        <option name="wrap">true</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Storage Activity by Block Device(s)</title>
+      <chart>
+        <title>Reads/Writes KB/s- 1 minute intervals (Overlay CPU-IOwait(%) &amp; IO-wait (ms) in 2nd logical axis)</title>
+        <search>
+          <query>| pivot introspection_storage_metrics intro_storage_metrics max(data.avg_total_ms) AS "IO-wait (ms)" max(data.reads_kb_ps) AS "Reads_KB/s" max(data.writes_kb_ps) AS "Writes_KB/s" max(data.cpu_pct) AS "Utilization (CPU IO/wait)" SPLITROW _time AS _time PERIOD minute SPLITROW host AS host SPLITCOL data.device SORT 0 _time ROWSUMMARY 0 COLSUMMARY 0 NUMCOLS 20 SHOWOTHER 1 | eval host=$splunk_server$</query>
+          <earliest>$time1.earliest$</earliest>
+          <latest>$time1.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="charting.axisY.scale">log</option>
+        <option name="charting.axisY2.enabled">1</option>
+        <option name="charting.chart">area</option>
+        <option name="charting.chart.overlayFields">"dm-2:::Utilization (CPU IO/wait)","dm-2:::IO-wait (ms)"</option>
+        <option name="charting.drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Relative IO-wait by threshold</title>
+      <chart>
+        <title>low(&lt;5ms) |  moderate(&lt;25ms) |  high(&lt;50ms) | excessive(&gt;50ms)</title>
+        <search>
+          <query>| pivot introspection_storage_metrics intro_storage_metrics avg(data.avg_total_ms) AS "IOwait (ms)" SPLITROW _time AS _time PERIOD minute SPLITROW host AS host SPLITCOL iothreshold SORT 0 _time ROWSUMMARY 0 COLSUMMARY 0 NUMCOLS 100 SHOWOTHER 1 | eval host=$splunk_server$</query>
+          <earliest>$time1.earliest$</earliest>
+          <latest>$time1.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="charting.chart">line</option>
+        <option name="charting.chart.stackMode">stacked</option>
+        <option name="charting.drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+    </panel>
+    <panel>
+      <title>Distribution of IO-wait by Threshold</title>
+      <chart>
+        <title>low(&lt;5ms) |  moderate(&lt;25ms) |  high(&lt;50ms) | excessive(&gt;50ms)</title>
+        <search>
+          <query>| pivot introspection_storage_metrics intro_storage_metrics count(iothreshold) AS "Count of IO-Threshold" SPLITROW iothreshold AS "IO-Threshold" SPLITROW host AS host SORT 100 iothreshold ROWSUMMARY 0 COLSUMMARY 0 SHOWOTHER 1 | eval host=$splunk_server$</query>
+          <earliest>$time1.earliest$</earliest>
+          <latest>$time1.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="charting.chart">bar</option>
+        <option name="charting.drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Reads/Writes MB/s</title>
+      <input type="dropdown" token="block_size" searchWhenChanged="true">
+        <label>Block Size</label>
+        <choice value="128">128 bytes</choice>
+        <choice value="512">512 bytes</choice>
+        <choice value="1024">1k</choice>
+        <choice value="4096">4k</choice>
+        <choice value="8192">8k</choice>
+        <choice value="16384">16k</choice>
+        <choice value="32768">32k</choice>
+        <default>512</default>
+        <initialValue>512</initialValue>
+      </input>
+      <chart>
+        <title>IOPS will change dependent on your Block Size for the volume in question (cat /sys/block/*/queue/max_sectors_kb | sort -u)</title>
+        <search>
+          <query>| pivot introspection_storage_metrics intro_storage_metrics max(reads_mb_ps) AS reads_mb_ps max(writes_mb_ps) AS writes_mb_ps SPLITROW _time AS _time PERIOD minute SPLITROW host AS host SORT 0 _time ROWSUMMARY 0 COLSUMMARY 0 SHOWOTHER 1 | fields _time reads_mb_ps writes_mb_ps $block_size$ | eval read_iops=(reads_mb_ps/$block_size$)*1024 | eval write_iops=(writes_mb_ps/$block_size$)*1024 | timechart span=2m max(reads_mb_ps) AS "Reads MB/s" max(writes_mb_ps) AS "Writes MB/s" max(read_iops) AS "Reads IOPS" max(write_iops) AS "Write IOPS" | eval host=$splunk_server$</query>
+          <earliest>$time1.earliest$</earliest>
+          <latest>$time1.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="charting.axisY2.enabled">1</option>
+        <option name="charting.axisY2.scale">linear</option>
+        <option name="charting.chart">column</option>
+        <option name="charting.chart.nullValueMode">zero</option>
+        <option name="charting.chart.overlayFields">"Reads IOPS","Write IOPS"</option>
+        <option name="charting.chart.stackMode">default</option>
+        <option name="charting.drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>% IOPS activity to Storage Tier</title>
+      <chart>
+        <title>"Real IOPS" to disk vs Logical IOPS</title>
+        <search>
+          <query>| pivot introspection_storage_metrics intro_storage_metrics max(total_iops) AS total_iops max(logical_iops) AS logical_iops SPLITROW _time AS _time PERIOD minute SPLITROW host AS host SORT 0 _time ROWSUMMARY 0 COLSUMMARY 0 SHOWOTHER 1 | fields logical_iops total_iops _time | eval perc_disk_util='total_iops'/'logical_iops'*100 | timechart max(logical_iops) AS "Logical IOPS" max(total_iops) AS "Real IOPS" max(perc_disk_util) AS "% of IO to storage tier" | eval host=$splunk_server$</query>
+          <earliest>$time1.earliest$</earliest>
+          <latest>$time1.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="charting.axisY.scale">log</option>
+        <option name="charting.axisY2.enabled">0</option>
+        <option name="charting.chart">area</option>
+        <option name="charting.chart.overlayFields">"% of IO to storage tier"</option>
+        <option name="charting.chart.stackMode">default</option>
+        <option name="charting.drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+    </panel>
+  </row>
+</form>

@@ -1,0 +1,28 @@
+[app/ui]
+version = 7.2.3
+modtime = 1548784545.865017000
+
+[app/launcher]
+version = 7.2.3
+modtime = 1548784545.866319000
+
+[datamodels/introspection_storage_metrics]
+access = read : [ * ], write : [ admin ]
+export = none
+owner = admin
+version = 7.2.3
+modtime = 1548962212.157205000
+
+[models/introspection_storage_metrics]
+access = read : [ * ], write : [ admin ]
+export = none
+owner = admin
+version = 7.2.3
+modtime = 1548962212.161834000
+
+[views/storage_analytics]
+access = read : [ * ], write : [ admin ]
+export = none
+owner = admin
+version = 7.2.3
+modtime = 1549038647.524315000

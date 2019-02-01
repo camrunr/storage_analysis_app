@@ -1,0 +1,484 @@
+{
+    "modelName": "introspection_storage_metrics",
+    "displayName": "introspection_storage_metrics",
+    "description": "Storage Metrics (_introspection)",
+    "objectSummary": {
+        "Event-Based": 1,
+        "Transaction-Based": 0,
+        "Search-Based": 1
+    },
+    "objects": [
+        {
+            "objectName": "intro_storage_metrics",
+            "displayName": "intro_storage_metrics",
+            "parentName": "BaseEvent",
+            "comment": "",
+            "fields": [
+                {
+                    "fieldName": "data.avg_total_ms",
+                    "owner": "intro_storage_metrics",
+                    "type": "number",
+                    "fieldSearch": "",
+                    "required": false,
+                    "multivalue": false,
+                    "hidden": false,
+                    "editable": true,
+                    "displayName": "data.avg_total_ms",
+                    "comment": ""
+                },
+                {
+                    "fieldName": "data.cpu_pct",
+                    "owner": "intro_storage_metrics",
+                    "type": "number",
+                    "fieldSearch": "",
+                    "required": false,
+                    "multivalue": false,
+                    "hidden": false,
+                    "editable": true,
+                    "displayName": "data.cpu_pct",
+                    "comment": ""
+                },
+                {
+                    "fieldName": "data.device",
+                    "owner": "intro_storage_metrics",
+                    "type": "string",
+                    "fieldSearch": "",
+                    "required": false,
+                    "multivalue": false,
+                    "hidden": false,
+                    "editable": true,
+                    "displayName": "data.device",
+                    "comment": ""
+                },
+                {
+                    "fieldName": "data.interval",
+                    "owner": "intro_storage_metrics",
+                    "type": "number",
+                    "fieldSearch": "",
+                    "required": false,
+                    "multivalue": false,
+                    "hidden": false,
+                    "editable": true,
+                    "displayName": "data.interval",
+                    "comment": ""
+                },
+                {
+                    "fieldName": "data.mount_point",
+                    "owner": "intro_storage_metrics",
+                    "type": "string",
+                    "fieldSearch": "",
+                    "required": false,
+                    "multivalue": false,
+                    "hidden": false,
+                    "editable": true,
+                    "displayName": "data.mount_point",
+                    "comment": ""
+                },
+                {
+                    "fieldName": "data.reads_kb_ps",
+                    "owner": "intro_storage_metrics",
+                    "type": "number",
+                    "fieldSearch": "",
+                    "required": false,
+                    "multivalue": false,
+                    "hidden": false,
+                    "editable": true,
+                    "displayName": "data.reads_kb_ps",
+                    "comment": ""
+                },
+                {
+                    "fieldName": "data.swap",
+                    "owner": "intro_storage_metrics",
+                    "type": "number",
+                    "fieldSearch": "",
+                    "required": false,
+                    "multivalue": false,
+                    "hidden": false,
+                    "editable": true,
+                    "displayName": "data.swap",
+                    "comment": ""
+                },
+                {
+                    "fieldName": "data.swap_used",
+                    "owner": "intro_storage_metrics",
+                    "type": "number",
+                    "fieldSearch": "",
+                    "required": false,
+                    "multivalue": false,
+                    "hidden": false,
+                    "editable": true,
+                    "displayName": "data.swap_used",
+                    "comment": ""
+                },
+                {
+                    "fieldName": "data.writes_kb_ps",
+                    "owner": "intro_storage_metrics",
+                    "type": "number",
+                    "fieldSearch": "",
+                    "required": false,
+                    "multivalue": false,
+                    "hidden": false,
+                    "editable": true,
+                    "displayName": "data.writes_kb_ps",
+                    "comment": ""
+                },
+                {
+                    "fieldName": "data.reads_ps",
+                    "owner": "intro_storage_metrics",
+                    "type": "number",
+                    "fieldSearch": "",
+                    "required": false,
+                    "multivalue": false,
+                    "hidden": false,
+                    "editable": true,
+                    "displayName": "data.reads_ps",
+                    "comment": ""
+                },
+                {
+                    "fieldName": "data.writes_ps",
+                    "owner": "intro_storage_metrics",
+                    "type": "number",
+                    "fieldSearch": "",
+                    "required": false,
+                    "multivalue": false,
+                    "hidden": false,
+                    "editable": true,
+                    "displayName": "data.writes_ps",
+                    "comment": ""
+                },
+                {
+                    "fieldName": "_time",
+                    "owner": "BaseEvent",
+                    "type": "timestamp",
+                    "fieldSearch": "",
+                    "required": false,
+                    "multivalue": false,
+                    "hidden": false,
+                    "editable": true,
+                    "displayName": "_time",
+                    "comment": ""
+                },
+                {
+                    "fieldName": "host",
+                    "owner": "BaseEvent",
+                    "type": "string",
+                    "fieldSearch": "",
+                    "required": false,
+                    "multivalue": false,
+                    "hidden": false,
+                    "editable": true,
+                    "displayName": "host",
+                    "comment": ""
+                },
+                {
+                    "fieldName": "source",
+                    "owner": "BaseEvent",
+                    "type": "string",
+                    "fieldSearch": "",
+                    "required": false,
+                    "multivalue": false,
+                    "hidden": false,
+                    "editable": true,
+                    "displayName": "source",
+                    "comment": ""
+                },
+                {
+                    "fieldName": "sourcetype",
+                    "owner": "BaseEvent",
+                    "type": "string",
+                    "fieldSearch": "",
+                    "required": false,
+                    "multivalue": false,
+                    "hidden": false,
+                    "editable": true,
+                    "displayName": "sourcetype",
+                    "comment": ""
+                }
+            ],
+            "calculations": [
+                {
+                    "outputFields": [
+                        {
+                            "fieldName": "iothreshold",
+                            "owner": "intro_storage_metrics",
+                            "type": "string",
+                            "fieldSearch": "",
+                            "required": false,
+                            "multivalue": false,
+                            "hidden": false,
+                            "editable": true,
+                            "displayName": "IO-Threshold",
+                            "comment": ""
+                        }
+                    ],
+                    "calculationID": "4mv75ym718g",
+                    "owner": "intro_storage_metrics",
+                    "editable": true,
+                    "comment": "",
+                    "calculationType": "Eval",
+                    "expression": "case('data.avg_total_ms'<=5, \"low\", 'data.avg_total_ms'<=25, \"moderate\", 'data.avg_total_ms'<=50, \"high\", 'data.avg_total_ms'>50, \"excessive\")"
+                },
+                {
+                    "outputFields": [
+                        {
+                            "fieldName": "writes_mb_ps",
+                            "owner": "intro_storage_metrics",
+                            "type": "number",
+                            "fieldSearch": "",
+                            "required": false,
+                            "multivalue": false,
+                            "hidden": false,
+                            "editable": true,
+                            "displayName": "Writes MB/s",
+                            "comment": ""
+                        }
+                    ],
+                    "calculationID": "h4wu85bytl",
+                    "owner": "intro_storage_metrics",
+                    "editable": true,
+                    "comment": "",
+                    "calculationType": "Eval",
+                    "expression": "'data.writes_kb_ps'/1024"
+                },
+                {
+                    "outputFields": [
+                        {
+                            "fieldName": "reads_mb_ps",
+                            "owner": "intro_storage_metrics",
+                            "type": "number",
+                            "fieldSearch": "",
+                            "required": false,
+                            "multivalue": false,
+                            "hidden": false,
+                            "editable": true,
+                            "displayName": "Reads MB/s",
+                            "comment": ""
+                        }
+                    ],
+                    "calculationID": "4ivo5i0dl0v",
+                    "owner": "intro_storage_metrics",
+                    "editable": true,
+                    "comment": "",
+                    "calculationType": "Eval",
+                    "expression": "'data.reads_kb_ps'/1024"
+                },
+                {
+                    "outputFields": [
+                        {
+                            "fieldName": "write_iops",
+                            "owner": "intro_storage_metrics",
+                            "type": "number",
+                            "fieldSearch": "",
+                            "required": false,
+                            "multivalue": false,
+                            "hidden": false,
+                            "editable": true,
+                            "displayName": "IOPS(writes)",
+                            "comment": ""
+                        }
+                    ],
+                    "calculationID": "f0lyaqmmi9c",
+                    "owner": "intro_storage_metrics",
+                    "editable": true,
+                    "comment": "",
+                    "calculationType": "Eval",
+                    "expression": "(writes_mb_ps/512)*1024"
+                },
+                {
+                    "outputFields": [
+                        {
+                            "fieldName": "read_iops",
+                            "owner": "intro_storage_metrics",
+                            "type": "number",
+                            "fieldSearch": "",
+                            "required": false,
+                            "multivalue": false,
+                            "hidden": false,
+                            "editable": true,
+                            "displayName": "IOPS(reads)",
+                            "comment": ""
+                        }
+                    ],
+                    "calculationID": "vx8jdzf73ko",
+                    "owner": "intro_storage_metrics",
+                    "editable": true,
+                    "comment": "",
+                    "calculationType": "Eval",
+                    "expression": "(reads_mb_ps/512)*1024"
+                },
+                {
+                    "outputFields": [
+                        {
+                            "fieldName": "block_size",
+                            "owner": "intro_storage_metrics",
+                            "type": "number",
+                            "fieldSearch": "",
+                            "required": false,
+                            "multivalue": false,
+                            "hidden": false,
+                            "editable": true,
+                            "displayName": "\"Block Size\"",
+                            "comment": ""
+                        }
+                    ],
+                    "calculationID": "3ydpbmm16c5",
+                    "owner": "intro_storage_metrics",
+                    "editable": true,
+                    "comment": "",
+                    "calculationType": "Eval",
+                    "expression": "128"
+                },
+                {
+                    "outputFields": [
+                        {
+                            "fieldName": "logical_iops",
+                            "owner": "intro_storage_metrics",
+                            "type": "number",
+                            "fieldSearch": "",
+                            "required": false,
+                            "multivalue": false,
+                            "hidden": false,
+                            "editable": true,
+                            "displayName": "IOPS in use",
+                            "comment": ""
+                        }
+                    ],
+                    "calculationID": "4ho8gcu9gh4",
+                    "owner": "intro_storage_metrics",
+                    "editable": true,
+                    "comment": "",
+                    "calculationType": "Eval",
+                    "expression": "'data.writes_ps'+'data.reads_ps'"
+                },
+                {
+                    "outputFields": [
+                        {
+                            "fieldName": "total_iops",
+                            "owner": "intro_storage_metrics",
+                            "type": "number",
+                            "fieldSearch": "",
+                            "required": false,
+                            "multivalue": false,
+                            "hidden": false,
+                            "editable": true,
+                            "displayName": "Total IOPS",
+                            "comment": ""
+                        }
+                    ],
+                    "calculationID": "vfea4fr496r",
+                    "owner": "intro_storage_metrics",
+                    "editable": true,
+                    "comment": "",
+                    "calculationType": "Eval",
+                    "expression": "write_iops+read_iops"
+                }
+            ],
+            "constraints": [
+                {
+                    "search": "index=_introspection component=Hostwide OR component=IOstats",
+                    "owner": "intro_storage_metrics"
+                }
+            ],
+            "lineage": "intro_storage_metrics"
+        },
+        {
+            "objectName": "rest_iostats",
+            "displayName": "rest_iostats",
+            "parentName": "BaseSearch",
+            "comment": "",
+            "fields": [
+                {
+                    "fieldName": "available",
+                    "owner": "rest_iostats",
+                    "type": "number",
+                    "fieldSearch": "",
+                    "required": false,
+                    "multivalue": false,
+                    "hidden": false,
+                    "editable": true,
+                    "displayName": "available",
+                    "comment": ""
+                },
+                {
+                    "fieldName": "capacity",
+                    "owner": "rest_iostats",
+                    "type": "number",
+                    "fieldSearch": "",
+                    "required": false,
+                    "multivalue": false,
+                    "hidden": false,
+                    "editable": true,
+                    "displayName": "capacity",
+                    "comment": ""
+                },
+                {
+                    "fieldName": "free",
+                    "owner": "rest_iostats",
+                    "type": "number",
+                    "fieldSearch": "",
+                    "required": false,
+                    "multivalue": false,
+                    "hidden": false,
+                    "editable": true,
+                    "displayName": "free",
+                    "comment": ""
+                },
+                {
+                    "fieldName": "mount_point",
+                    "owner": "rest_iostats",
+                    "type": "string",
+                    "fieldSearch": "",
+                    "required": false,
+                    "multivalue": false,
+                    "hidden": false,
+                    "editable": true,
+                    "displayName": "mount_point",
+                    "comment": ""
+                },
+                {
+                    "fieldName": "splunk_server",
+                    "owner": "rest_iostats",
+                    "type": "string",
+                    "fieldSearch": "",
+                    "required": false,
+                    "multivalue": false,
+                    "hidden": false,
+                    "editable": true,
+                    "displayName": "splunk_server",
+                    "comment": ""
+                }
+            ],
+            "calculations": [
+                {
+                    "outputFields": [
+                        {
+                            "fieldName": "disk_free",
+                            "owner": "rest_iostats",
+                            "type": "number",
+                            "fieldSearch": "",
+                            "required": false,
+                            "multivalue": false,
+                            "hidden": false,
+                            "editable": true,
+                            "displayName": "%Free Disk (MB)",
+                            "comment": ""
+                        }
+                    ],
+                    "calculationID": "948mph7cp7k",
+                    "owner": "rest_iostats",
+                    "editable": true,
+                    "comment": "",
+                    "calculationType": "Eval",
+                    "expression": "round(available/capacity*100,2)"
+                }
+            ],
+            "constraints": [],
+            "lineage": "rest_iostats",
+            "baseSearch": "| rest /services/server/status/partitions-space"
+        }
+    ],
+    "objectNameList": [
+        "intro_storage_metrics",
+        "rest_iostats"
+    ]
+}
